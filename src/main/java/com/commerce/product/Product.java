@@ -35,4 +35,12 @@ public class Product {
   public ProductPrice getCurrentPrice() { return currentPrice; }
   public ProductAvailability getAvailability() { return availability; }
   public Set<Category> getCategories() { return categories; }
+  public void update(String name, String description, ProductPrice price, ProductAvailability availability, Set<Category> categories) {
+    this.name = name;
+    this.description = description;
+    this.currentPrice.updatePrice(price.getPriceInCents());
+    this.availability.update(availability.getAvailableStock(), availability.isAvailable());
+    this.categories = new LinkedHashSet<>(categories);
+  }
+  public void deactivate() { this.active = false; }
 }

@@ -1,25 +1,46 @@
 package com.commerce.product;
 
 import java.util.List;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/products")
 public class ProductController {
-  private final ProductRepository repository;
-  public ProductController(ProductRepository repository) { this.repository = repository; }
+  private final ProductService service;
+  public ProductController(ProductService service) { this.service = service; }
 
   @GetMapping
-  List<ProductResponse> list() { return repository.findAll().stream().map(ProductResponse::from).toList(); }
+  public List<ProductResponse> list() { return service.listActive().stream().map(ProductResponse::from).toList(); }
+
+  @PostMapping
+  public ResponseEntity<ProductResponse> create(@Valid @RequestBody ProductRequest request) {
+    return ResponseEntity.status(HttpStatus.CREATED).body(ProductResponse.from(service.create(request)));
+  }
 
   @GetMapping("/{id}")
-  ResponseEntity<ProductResponse> get(@PathVariable String id) {
-    return repository.findById(id).map(product -> ResponseEntity.ok(ProductResponse.from(product)))
-        .orElseGet(() -> ResponseEntity.notFound().build());
+  public ResponseEntity<ProductResponse> get(@PathVariable String id) {
+    return ResponseEntity.ok(ProductResponse.from(service.getActive(id)));
+  }
+
+  @PutMapping("/{id}")
+  public ProductResponse update(@PathVariable String id, @Valid @RequestBody ProductRequest request) {
+    return ProductResponse.from(service.update(id, request));
+  }
+
+  @DeleteMapping("/{id}")
+  public ResponseEntity<Void> deactivate(@PathVariable String id) {
+    service.deactivate(id);
+    return ResponseEntity.noContent().build();
   }
 }
 

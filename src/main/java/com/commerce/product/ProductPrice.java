@@ -13,4 +13,5 @@ public class ProductPrice {
   public ProductPrice(String id, long priceInCents) { this.id = id; this.priceInCents = priceInCents; }
   public String getId() { return id; }
   public long getPriceInCents() { return priceInCents; }
+  public void updatePrice(long priceInCents) { this.priceInCents = priceInCents; }
 }

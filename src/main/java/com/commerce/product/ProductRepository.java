@@ -10,6 +10,12 @@ public interface ProductRepository extends JpaRepository<Product, String> {
   @EntityGraph(attributePaths = {"categories", "currentPrice", "availability"})
   List<Product> findAll();
 
+  @EntityGraph(attributePaths = {"categories", "currentPrice", "availability"})
+  List<Product> findByActiveTrue();
+
+  @EntityGraph(attributePaths = {"categories", "currentPrice", "availability"})
+  Optional<Product> findByIdAndActiveTrue(String id);
+
   @Override
   @EntityGraph(attributePaths = {"categories", "currentPrice", "availability"})
   Optional<Product> findById(String id);
