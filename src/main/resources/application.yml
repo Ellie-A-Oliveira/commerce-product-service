@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/commerce}
+    username: ${SPRING_DATASOURCE_USERNAME:commerce}
+    password: ${SPRING_DATASOURCE_PASSWORD:commerce}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+  flyway:
+    enabled: true
