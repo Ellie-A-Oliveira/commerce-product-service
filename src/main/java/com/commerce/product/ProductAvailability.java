@@ -15,4 +15,8 @@ public class ProductAvailability {
   public String getId() { return id; }
   public int getAvailableStock() { return availableStock; }
   public boolean isAvailable() { return available; }
+  public void update(int availableStock, boolean available) {
+    this.availableStock = availableStock;
+    this.available = available;
+  }
 }
