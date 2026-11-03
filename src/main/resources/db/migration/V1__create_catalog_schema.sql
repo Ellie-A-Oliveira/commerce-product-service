@@ -19,8 +19,8 @@ CREATE TABLE products (
   name VARCHAR(200) NOT NULL,
   description TEXT NOT NULL,
   active BOOLEAN NOT NULL,
-  current_price_id VARCHAR(64) NOT NULL REFERENCES product_prices(id),
-  availability_id VARCHAR(64) NOT NULL REFERENCES product_availability(id)
+  current_price_id VARCHAR(64) NOT NULL UNIQUE REFERENCES product_prices(id),
+  availability_id VARCHAR(64) NOT NULL UNIQUE REFERENCES product_availability(id)
 );
 
 CREATE TABLE product_categories (
